@@ -82,9 +82,12 @@ public class JFrame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //this.setVisible(false);
+        //JFrame2 jf2 = new JFrame2();
+        //jf2.setVisible(true);
         this.setVisible(false);
-        JFrame2 jf2 = new JFrame2();
-        jf2.setVisible(true);
+        ManejoArchivo ma = new ManejoArchivo();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

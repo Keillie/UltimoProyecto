@@ -12,6 +12,7 @@ import java.io.RandomAccessFile;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 public class ManejoArchivo {
     //variables globales que se usaran en todo el programa.
@@ -120,66 +121,87 @@ public class ManejoArchivo {
         try{
             Entidad entidad = new Entidad(); //Instanciando clase.
             entidad.setIndice(listaEntidades.size() + 1);
-            System.out.println(" Ingrese el nombre de la entidad: ");
+            JOptionPane.showInputDialog(null," Ingrese el nombre de la entidad: ", JOptionPane.INFORMATION_MESSAGE);
+            //System.out.println(" Ingrese el nombre de la entidad: ");
             String stringNombre = "";
             int longitud = 0;
             do{
                 stringNombre = sc.nextLine();
                 longitud = stringNombre.length();
                 if(longitud < 2 || longitud >30){
-                    System.out.println(" La logitud del nombre no es valida [3 - 30]");
+                   JOptionPane.showMessageDialog(null, " La logitud del nombre no es valida [3 - 30]");
+                   //System.out.println(" La logitud del nombre no es valida [3 - 30]");
                 }else{
                     if(stringNombre.contains(" ")){ //stringNombre contiene espacios vacios
-                        System.out.println(" El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
+                        JOptionPane.showMessageDialog(null, " El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
+                        //System.out.println(" El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
                         longitud = 0;
                     }
                 }
             }while (longitud < 2 || longitud > 30);
             entidad.setNombre(stringNombre);
-            System.out.println(" Atributos de la entidad.");
+            JOptionPane.showMessageDialog(null, " Atributos de la entidad.");
+            //System.out.println(" Atributos de la entidad.");
             int bndDetener = 0; //se presionara 0 para detener el proceso.
             do{
                 Atributo atributo = new Atributo(); //Instanciando clase Atributo
                 atributo.setIndice(entidad.getIndice());
                 longitud = 0;
-                System.out.println(" Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1));
+                JOptionPane.showInputDialog(null," Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1), JOptionPane.INFORMATION_MESSAGE);
+                //System.out.println(" Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1));
                 do{
                     stringNombre = sc.nextLine();
                     longitud = stringNombre.length(); //length se obtiene la longitud de una cadena
                     if(longitud < 2 || longitud > 30){
-                        System.out.println(" La longitud del nombre no es valida [3 - 30]");
+                        JOptionPane.showMessageDialog(null, " La logitud del nombre no es valida [3 - 30]");
+                        //System.out.println(" La longitud del nombre no es valida [3 - 30]");
                     }else{
                         if(stringNombre.contains(" ")){ //contains verifica si String contiene otra subcadena o no.
-                            System.out.println(" El nombre no puedecontener espacios, sustituya un guien bajo. ");
+                            JOptionPane.showMessageDialog(null, " El nombre no puedecontener espacios, sustituya un guien bajo. ");
+                            //System.out.println(" El nombre no puedecontener espacios, sustituya un guien bajo. ");
                             longitud = 0;
                         }
                     }
                 }while (longitud < 2 || longitud > 30); //hacer mientras longitud sea menor que 2 o longitud sea mayor que 30
                 atributo.setNombre(stringNombre);
-                System.out.println(" Seleccione el tipo de dato. ");
-                System.out.println(TipoDato.INT.getValue() + "----------" + TipoDato.INT.name());
-                System.out.println(TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name());
-                System.out.println(TipoDato.STRING.getValue() + "----------" + TipoDato.STRING.name());
-                System.out.println(TipoDato.DOUBLE.getValue() + "----------" + TipoDato.DOUBLE.name());
-                System.out.println(TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name());
-                System.out.println(TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name());
-                System.out.println(TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name());
+                
+                JOptionPane.showInputDialog(null,
+                            " Seleccione el tipo de dato: "
+                            + TipoDato.INT.getValue() + "----------" + TipoDato.INT.name()
+                            + TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name()
+                            + TipoDato.STRING.getValue() + "----------" + TipoDato.STRING.name()
+                            + TipoDato.DOUBLE.getValue() + "----------" + TipoDato.DOUBLE.name()
+                            + TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name()
+                            + TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name()
+                            + TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE);
+                //System.out.println(" Seleccione el tipo de dato. ");
+                //System.out.println(TipoDato.INT.getValue() + "----------" + TipoDato.INT.name());
+                //System.out.println(TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name());
+                //System.out.println(TipoDato.STRING.getValue() + "----------" + TipoDato.STRING.name());
+                //System.out.println(TipoDato.DOUBLE.getValue() + "----------" + TipoDato.DOUBLE.name());
+                //System.out.println(TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name());
+                //System.out.println(TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name());
+                //System.out.println(TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name());
                 atributo.setValorTipoDato(sc.nextInt());
                 if(atributo.isRequiereLongitud()){
-                    System.out.println(" Ingrese la longitud que desea. ");
+                    JOptionPane.showInputDialog(null," Ingrese la longitud que desea. ", JOptionPane.INFORMATION_MESSAGE);
+                    //System.out.println(" Ingrese la longitud que desea. ");
                     atributo.setLongitud(sc.nextInt());
                 }else{
                     atributo.setLongitud(0);
                 }
                 atributo.setNombreTipoDato();
                 entidad.setAtributo(atributo);
-                System.out.println(" Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0");
-                bndDetener = sc.nextInt();
+                bndDetener = Integer.parseInt(JOptionPane.showInputDialog(null," Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0", JOptionPane.INFORMATION_MESSAGE));
+                //System.out.println(" Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0");
+                //bndDetener = sc.nextInt();
             }while(bndDetener != 0); //se realizara mientras el valor ingresado sea diferente a 0
-            System.out.println(" Los datos a registrar son: ");
+            JOptionPane.showMessageDialog(null, " Los datos a registrar son: ");
+            //System.out.println(" Los datos a registrar son: ");
 	    mostrarEntidad(entidad);
-	    System.out.println(" Presione 1 para guardar y 0 para cancelar el proceso.");
-	    longitud = sc.nextInt();
+            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", JOptionPane.INFORMATION_MESSAGE));
+	    //System.out.println(" Presione 1 para guardar y 0 para cancelar el proceso.");
+	    //longitud = sc.nextInt();
             if(longitud == 1){
                 // primero guardar atributos
 		// establecer la posicion inicial donde se va a guardar
@@ -202,10 +224,12 @@ public class ManejoArchivo {
 		listaEntidades.add(entidad);
 		resultado = true;
             }else{
-                System.out.println(" No se guardo la entidad debido a que el usuario decidio cancelarlo. ");
+                JOptionPane.showMessageDialog(null, " No se guardo la entidad debido a que el usuario decidio cancelarlo. ");
+                //System.out.println(" No se guardo la entidad debido a que el usuario decidio cancelarlo. ");
 		resultado = false;
             }
-            System.out.println(" Presione una tecla para continuar...");
+            JOptionPane.showInputDialog(null," Presione una tecla para continuar...", JOptionPane.INFORMATION_MESSAGE);
+            //System.out.println(" Presione una tecla para continuar...");
 	    System.in.read(); //lee exactamente un byte del flujo de entrada (teclado en este caso).
         }catch(Exception e){
             resultado = false;
@@ -220,8 +244,9 @@ public class ManejoArchivo {
                     for(Entidad entidad : listaEntidades){ 
                         System.out.println(entidad.getIndice() + " --------- " + entidad.getNombre());
                     }
-                    System.out.println(" Seleccione la entidad que desea modificar: ");
-		    indice = sc.nextInt();
+                    indice = Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione la entidad que desea modificar: ", JOptionPane.INFORMATION_MESSAGE));
+                    //System.out.println(" Seleccione la entidad que desea modificar: ");
+		    //indice = sc.nextInt();
                 }
                 Entidad entidad = null;//clase Entidad es igual a entidad inicializada como null
                 for(Entidad e : listaEntidades){
@@ -235,7 +260,8 @@ public class ManejoArchivo {
 		long longitudDatos = archivo.length(); //length se obtiene la longitud de una cadena
 		archivo.close();
                 if(longitudDatos > 0){
-                    System.out.println(" No es posible modificar la entidad debido a que ya tiene datos asociados");
+                    JOptionPane.showMessageDialog(null, " No es posible modificar la entidad debido a que ya tiene datos asociados");
+                    //System.out.println(" No es posible modificar la entidad debido a que ya tiene datos asociados");
                 }else{
                     // bandera para verificar que el registro fue encontrado
 		    boolean bndEncontrado = false, bndModificado = false;
@@ -294,98 +320,91 @@ public class ManejoArchivo {
         }
         
         private void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
-            int opciones = 1;
-            while(opciones != 0){
-                System.out.println("------------MENU-------------");
-	        System.out.println(" 1. --------- Agregar entidad");
-	        System.out.println(" 2. ------- Modificar entidad");
-		System.out.println(" 3. -------- Listar entidades");
-                if(mostrarAgregarRegistro){
-                    System.out.println(" 4. ------- Agregar registros");
-                }
-                System.out.println(" 5. --- Borrar bases de datos");
-		System.out.println(" 0 -------------------- Salir");
-                System.out.println(" Elija su opcion: ");
-                opciones = sc.nextInt();
-                switch(opciones){
-                    case 0:
-                        System.out.println(" ---------Saliendo--------");
-                        break;
-                    case 1:
-                        if(agregarEntidad()){
-                            System.out.println(" Entidad agregada con exito");
+            int opciones = 1;//int opciones = 1;
+            do{
+                try{
+                    opciones = Integer.parseInt(JOptionPane.showInputDialog(null,
+                            "------------MENU------------- \n"
+                            + " 1. --------- Agregar entidad \n"
+                            + " 2. ------- Modificar entidad \n"
+                            + " 3. -------- Listar entidades \n"
+                            + " 4. ------- Agregar registros \n"
+                            + " 5. --- Borrar bases de datos \n"
+                            + " 0 -------------------- Salir \n"
+                            + " Elija su opcion: \n"," Menu de Opciones ", JOptionPane.INFORMATION_MESSAGE));
+                    switch(opciones){
+                        case 0:
+                            JOptionPane.showMessageDialog(null, " Aplicacion finalizada. ", " Saliendo ",JOptionPane.INFORMATION_MESSAGE );
+                            break;
+                        case 1:
+                            if(agregarEntidad()){
+                            JOptionPane.showMessageDialog(null, " Entidad agregada con exito. ");
                             mostrarAgregarRegistro = true;
                         }
-                        break;
-                    case 2:
-                        int continuar = 0;
-                        System.out.println(" ¿Esta seguro de modificar los archivos de base de datos? ");
-                        System.out.println(" Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. ");
-                        continuar = sc.nextInt();
-                        if(continuar == 1){
-                            cerrarArchivo();
-                            System.out.println(" Ingrese el nombre de la entidad a modificar ");
-                            if(borrarArchivos()){
-                                listaEntidades = null;
-				listaEntidades = new ArrayList<>();
-				mostrarAgregarRegistro = false;
-				System.out.println(" Archivos borrados. ");
-                                System.out.println(" Actualizando :D ");
-                            }
-                        }
-                        break;
-                    case 3:
-                        if(listaEntidades.size() > 0){
-                            int temporalInt = 0;
-                            System.out.println(" Desea imprimir los detalles: ");
-                            System.out.println(" Si, presione 1. No, presione 0.");
-			    temporalInt = sc.nextInt();
-                            if(temporalInt == 1){
-                                for(Entidad entidad : listaEntidades){
-                                    mostrarEntidad(entidad);
+                            break;
+                        case 2:
+                            int continuar = 0;
+                            continuar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de modificar los archivos de base de datos? "," Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. \n", JOptionPane.INFORMATION_MESSAGE));
+                            if(continuar == 1){
+                                cerrarArchivo();
+                                JOptionPane.showInputDialog(null, " Ingrese el nombre de la entidad a modificar ", "  ",JOptionPane.INFORMATION_MESSAGE );
+                                if(borrarArchivos()){
+                                    listaEntidades = null;
+				    listaEntidades = new ArrayList<>();
+				    mostrarAgregarRegistro = false;
+                                    JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando :D ", JOptionPane.INFORMATION_MESSAGE);
                                 }
-                            }else{
-                                for(Entidad entidad : listaEntidades){
+                            }
+                            break;
+                        case 3:
+                            if(listaEntidades.size() > 0){
+                                int temporalInt = 0;
+                                temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Si, presione 1. No, presione 0.", JOptionPane.INFORMATION_MESSAGE));
+                                if(temporalInt == 1){
+                                    for(Entidad entidad : listaEntidades){
+                                        mostrarEntidad(entidad);
+                                    }
+                                }else{
+                                    for(Entidad entidad : listaEntidades){
                                     System.out.println(" Indice: " + entidad.getIndice());
 				    System.out.println(" Nombre: " + entidad.getNombre());
 				    System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+                                    }
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null,  " No hay entidades registradas. ", " ",JOptionPane.INFORMATION_MESSAGE );
+                            }
+                            break;
+                        case 4:
+                            int indice = 0;
+                            while(indice < 1 || indice > listaEntidades.size()){
+                                for(Entidad entidad : listaEntidades){
+                                    System.out.println(entidad.getIndice() + " -------- " + entidad.getNombre());
+                                }
+                                indice = Integer.parseInt(JOptionPane.showInputDialog(null, " Seleccione el numero de entidad que desea trabajar. "," ", JOptionPane.INFORMATION_MESSAGE));
+                            }
+                            iniciar(indice);
+                            break;
+                        case 5:
+                            int confirmar = 0;
+                            confirmar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de borrar los archivos de base de datos? \n"," Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. ", JOptionPane.INFORMATION_MESSAGE));
+                            if(confirmar == 1){
+                                cerrarArchivo();
+                                if(borrarArchivos()){
+                                    listaEntidades = null;
+				    listaEntidades = new ArrayList<>();
+				    mostrarAgregarRegistro = false;
+                                    JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando :D ",JOptionPane.INFORMATION_MESSAGE );
                                 }
                             }
-                        }else{
-                            System.out.println(" No hay entidades registradas. ");
-                        }
-                        break;
-                    case 4:
-                        int indice = 0;
-                        while(indice < 1 || indice > listaEntidades.size()){
-                            for(Entidad entidad : listaEntidades){
-                                System.out.println(entidad.getIndice() + " -------- " + entidad.getNombre());
-                            }
-                            System.out.println(" Seleccione la entidad que desea trabajar. ");
-			    indice = sc.nextInt();
-                        }
-                        iniciar(indice);
-                        break;
-                    case 5:
-                        int confirmar = 0;
-                        System.out.println(" ¿Esta seguro de borrar los archivos de base de datos? ");
-                        System.out.println(" Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. ");
-                        confirmar = sc.nextInt();
-                        if(confirmar == 1){
-                            cerrarArchivo();
-                            if(borrarArchivos()){
-                                listaEntidades = null;
-				listaEntidades = new ArrayList<>();
-				mostrarAgregarRegistro = false;
-				System.out.println(" Archivos borrados. ");
-                                System.out.println(" Actualizando :D ");
-                            }
-                        }
-                        break;
-                    default:
-                        System.out.println(" Opcion invalidad. :(");
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null, " Opcion invalida. ", " Ingrese opcion de nuevo. ",JOptionPane.INFORMATION_MESSAGE );
+                    }
+                }catch(NumberFormatException nf){
+                    JOptionPane.showMessageDialog(null," Error " + nf.getMessage());
                 }
-            }
+            }while(opciones != 0);
         }
         
         private void cerrarArchivo(){
