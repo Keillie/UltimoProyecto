@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package proyecto;
 
-/**
- *
- * @author lenovo
- */
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class JFrame1 extends javax.swing.JFrame {
 
     /**
@@ -85,9 +81,19 @@ public class JFrame1 extends javax.swing.JFrame {
         //this.setVisible(false);
         //JFrame2 jf2 = new JFrame2();
         //jf2.setVisible(true);
-        this.setVisible(false);
         ManejoArchivo ma = new ManejoArchivo();
         
+        try {
+            if(ma.validarDefinicion()){
+            ma.menuDefinicion(true);
+            //ma.menuDefinicion(true);
+        }else{
+            ma.menuDefinicion(false);
+            //ma.menuDefinicion(false);
+        }
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -32,22 +32,28 @@ public class ManejoArchivo {
     
     public static void main (String [] args) throws IOException{
         ManejoArchivo ma = new ManejoArchivo(); //Instanciando ManejoArchivo
+        JFrame1 jf1 = new JFrame1();
+        //jf1.setVisible (false);
         if(ma.validarDefinicion()){
-            ma.menuDefinicion(true);
+            jf1.setVisible (true);
+            
+            ma.menuDefinicion(false);
         }else{
+            
             ma.menuDefinicion(false);
         }
         System.exit(0); //finaliza aplicacion
     }
     //Metodos para definicion
-    private boolean validarDefinicion() throws FileNotFoundException, IOException{
+    boolean validarDefinicion() throws FileNotFoundException, IOException{
         boolean respuesta = false;
         try{
             entidades = new RandomAccessFile(rutaEntidades, "rw");
             atributos = new RandomAccessFile(rutaAtributos, "rw");
             long longitud = entidades.length();//lengh para obtener la logitud de la cadena.
             if (longitud <= 0){
-                System.out.println("No hay registros.");
+                JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
+                //System.out.println("No hay registros.");
                 respuesta = false; //finaliza los procedimientos
             }
             if (longitud  >= bytesEntidades){
@@ -67,7 +73,8 @@ public class ManejoArchivo {
                     //leer atributos
                     long longitudAtributos = atributos.length();//length se obtiene la longitud de una cadena
                     if(longitudAtributos <= 0){
-                        System.out.println("No hay registros. ");
+                        JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
+                        //System.out.println("No hay registros. ");
                         respuesta = false; //finalizar el procedimiento.
                         break;
                     }
@@ -121,15 +128,15 @@ public class ManejoArchivo {
         try{
             Entidad entidad = new Entidad(); //Instanciando clase.
             entidad.setIndice(listaEntidades.size() + 1);
-            JOptionPane.showInputDialog(null," Ingrese el nombre de la entidad: ", JOptionPane.INFORMATION_MESSAGE);
+            String stringNombre = JOptionPane.showInputDialog(null," Ingrese el nombre de la entidad: "," Entidad ", JOptionPane.INFORMATION_MESSAGE);
             //System.out.println(" Ingrese el nombre de la entidad: ");
-            String stringNombre = "";
+            //String stringNombre = "";
             int longitud = 0;
             do{
-                stringNombre = sc.nextLine();
+                //stringNombre = sc.nextLine();
                 longitud = stringNombre.length();
                 if(longitud < 2 || longitud >30){
-                   JOptionPane.showMessageDialog(null, " La logitud del nombre no es valida [3 - 30]");
+                   JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]");
                    //System.out.println(" La logitud del nombre no es valida [3 - 30]");
                 }else{
                     if(stringNombre.contains(" ")){ //stringNombre contiene espacios vacios
@@ -147,13 +154,13 @@ public class ManejoArchivo {
                 Atributo atributo = new Atributo(); //Instanciando clase Atributo
                 atributo.setIndice(entidad.getIndice());
                 longitud = 0;
-                JOptionPane.showInputDialog(null," Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1), JOptionPane.INFORMATION_MESSAGE);
+                stringNombre = JOptionPane.showInputDialog(null," Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1), " Atributo ", JOptionPane.INFORMATION_MESSAGE);
                 //System.out.println(" Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1));
                 do{
-                    stringNombre = sc.nextLine();
+                    //stringNombre = sc.nextLine();
                     longitud = stringNombre.length(); //length se obtiene la longitud de una cadena
                     if(longitud < 2 || longitud > 30){
-                        JOptionPane.showMessageDialog(null, " La logitud del nombre no es valida [3 - 30]");
+                        JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]");
                         //System.out.println(" La longitud del nombre no es valida [3 - 30]");
                     }else{
                         if(stringNombre.contains(" ")){ //contains verifica si String contiene otra subcadena o no.
@@ -165,15 +172,14 @@ public class ManejoArchivo {
                 }while (longitud < 2 || longitud > 30); //hacer mientras longitud sea menor que 2 o longitud sea mayor que 30
                 atributo.setNombre(stringNombre);
                 
-                JOptionPane.showInputDialog(null,
-                            " Seleccione el tipo de dato: "
-                            + TipoDato.INT.getValue() + "----------" + TipoDato.INT.name()
-                            + TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name()
-                            + TipoDato.STRING.getValue() + "----------" + TipoDato.STRING.name()
-                            + TipoDato.DOUBLE.getValue() + "----------" + TipoDato.DOUBLE.name()
-                            + TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name()
-                            + TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name()
-                            + TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE);
+                atributo.setValorTipoDato(Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el tipo de dato: "
+                            + " \n " + TipoDato.INT.getValue() + " ---------- " + TipoDato.INT.name()
+                            + " \n " + TipoDato.LONG.getValue() + " ---------- " + TipoDato.LONG.name()
+                            + " \n " + TipoDato.STRING.getValue() + " ---------- " + TipoDato.STRING.name()
+                            + " \n " + TipoDato.DOUBLE.getValue() + " ---------- " + TipoDato.DOUBLE.name()
+                            + " \n " + TipoDato.FLOAT.getValue() + " ---------- " + TipoDato.FLOAT.name()
+                            + " \n " + TipoDato.DATE.getValue() + " ---------- " + TipoDato.DATE.name()
+                            + " \n " + TipoDato.CHAR.getValue() + " ---------- " + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE)));
                 //System.out.println(" Seleccione el tipo de dato. ");
                 //System.out.println(TipoDato.INT.getValue() + "----------" + TipoDato.INT.name());
                 //System.out.println(TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name());
@@ -182,11 +188,11 @@ public class ManejoArchivo {
                 //System.out.println(TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name());
                 //System.out.println(TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name());
                 //System.out.println(TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name());
-                atributo.setValorTipoDato(sc.nextInt());
+                //atributo.setValorTipoDato(sc.nextInt());
                 if(atributo.isRequiereLongitud()){
-                    JOptionPane.showInputDialog(null," Ingrese la longitud que desea. ", JOptionPane.INFORMATION_MESSAGE);
+                    atributo.setLongitud(Integer.parseInt(JOptionPane.showInputDialog(null," Ingrese la longitud que desea. "," Longitud ", JOptionPane.INFORMATION_MESSAGE)));
                     //System.out.println(" Ingrese la longitud que desea. ");
-                    atributo.setLongitud(sc.nextInt());
+                    //atributo.setLongitud(sc.nextInt());
                 }else{
                     atributo.setLongitud(0);
                 }
@@ -199,7 +205,7 @@ public class ManejoArchivo {
             JOptionPane.showMessageDialog(null, " Los datos a registrar son: ");
             //System.out.println(" Los datos a registrar son: ");
 	    mostrarEntidad(entidad);
-            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", JOptionPane.INFORMATION_MESSAGE));
+            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", " Guardar o borrar", JOptionPane.INFORMATION_MESSAGE));
 	    //System.out.println(" Presione 1 para guardar y 0 para cancelar el proceso.");
 	    //longitud = sc.nextInt();
             if(longitud == 1){
@@ -281,16 +287,19 @@ public class ManejoArchivo {
 		       en.setBytes(entidades.readInt());
 		       en.setPosicion(entidades.readLong());
                        if(entidad.getIndice() == en.getIndice()){
-                           System.out.println(" Si no desea modificar el campo presione enter");
-			   System.out.println(" Ingrese el nombre: ");
-			   String temporalString = "";
+                           JOptionPane.showMessageDialog(null, " Si no desea modificar el campo presione enter: ");
+                           //System.out.println(" Si no desea modificar el campo presione enter");
+                           String temporalString = JOptionPane.showInputDialog(null," Ingrese el nombre: ", JOptionPane.INFORMATION_MESSAGE);
+			   //System.out.println(" Ingrese el nombre: ");
+			   //String temporalString = "";
 			   int longitud2 = 0;
 			   long posicion;
                            do{
                                temporalString = sc.nextLine();
 			       longitud2 = temporalString.length(); //length se obtiene la longitud de una cadena
                                if(longitud2 == 1 || longitud2 > 30){
-                                   System.out.println(" La longitud del nombre no es valida [2 - 30]");
+                                   JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [2 - 30]");
+                                   //System.out.println(" La longitud del nombre no es valida [2 - 30]");
                                }
                            }while(longitud2 == 1 || longitud2 > 30);
                            if(longitud2 > 0){
@@ -304,8 +313,10 @@ public class ManejoArchivo {
                            }
                            i = 1;
                            for(Atributo at : entidad.getAtributos()){
-                               System.out.println(" Modificando atributo 1");
-			       System.out.println(at.getNombre().trim());//trim de clase String elimina los espacios al prinpio y al final de las cadenas.
+                               JOptionPane.showMessageDialog(null, " Modificando atributo 1");
+                               //System.out.println(" Modificando atributo 1");
+                               JOptionPane.showMessageDialog(null, at.getNombre().trim());
+			       //System.out.println(at.getNombre().trim());//trim de clase String elimina los espacios al prinpio y al final de las cadenas.
                            }
                            break;
                        }
@@ -319,10 +330,11 @@ public class ManejoArchivo {
             }
         }
         
-        private void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
+        void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
             int opciones = 1;//int opciones = 1;
             do{
                 try{
+                    
                     opciones = Integer.parseInt(JOptionPane.showInputDialog(null,
                             "------------MENU------------- \n"
                             + " 1. --------- Agregar entidad \n"
@@ -331,7 +343,7 @@ public class ManejoArchivo {
                             + " 4. ------- Agregar registros \n"
                             + " 5. --- Borrar bases de datos \n"
                             + " 0 -------------------- Salir \n"
-                            + " Elija su opcion: \n"," Menu de Opciones ", JOptionPane.INFORMATION_MESSAGE));
+                            + " Elija su opcion: \n"," Menu Entidades ", JOptionPane.INFORMATION_MESSAGE));
                     switch(opciones){
                         case 0:
                             JOptionPane.showMessageDialog(null, " Aplicacion finalizada. ", " Saliendo ",JOptionPane.INFORMATION_MESSAGE );
@@ -347,7 +359,7 @@ public class ManejoArchivo {
                             continuar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de modificar los archivos de base de datos? "," Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. \n", JOptionPane.INFORMATION_MESSAGE));
                             if(continuar == 1){
                                 cerrarArchivo();
-                                JOptionPane.showInputDialog(null, " Ingrese el nombre de la entidad a modificar ", "  ",JOptionPane.INFORMATION_MESSAGE );
+                                JOptionPane.showInputDialog(null, " Ingrese el nombre de la entidad a modificar ", " Modificar ",JOptionPane.INFORMATION_MESSAGE );
                                 if(borrarArchivos()){
                                     listaEntidades = null;
 				    listaEntidades = new ArrayList<>();
@@ -359,7 +371,7 @@ public class ManejoArchivo {
                         case 3:
                             if(listaEntidades.size() > 0){
                                 int temporalInt = 0;
-                                temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Si, presione 1. No, presione 0.", JOptionPane.INFORMATION_MESSAGE));
+                                temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Listar ", JOptionPane.INFORMATION_MESSAGE));
                                 if(temporalInt == 1){
                                     for(Entidad entidad : listaEntidades){
                                         mostrarEntidad(entidad);
@@ -381,13 +393,13 @@ public class ManejoArchivo {
                                 for(Entidad entidad : listaEntidades){
                                     System.out.println(entidad.getIndice() + " -------- " + entidad.getNombre());
                                 }
-                                indice = Integer.parseInt(JOptionPane.showInputDialog(null, " Seleccione el numero de entidad que desea trabajar. "," ", JOptionPane.INFORMATION_MESSAGE));
+                                indice = Integer.parseInt(JOptionPane.showInputDialog(null, " Seleccione el numero de entidad que desea trabajar. "," Agregar Registros ", JOptionPane.INFORMATION_MESSAGE));
                             }
                             iniciar(indice);
                             break;
                         case 5:
                             int confirmar = 0;
-                            confirmar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de borrar los archivos de base de datos? \n"," Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. ", JOptionPane.INFORMATION_MESSAGE));
+                            confirmar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de borrar los archivos de base de datos? \n" + " Presione 1 para continuar de lo contrario cualquier numero para cancelar. \n  Esta accion no es reversible. "," Eliminar ", JOptionPane.INFORMATION_MESSAGE));
                             if(confirmar == 1){
                                 cerrarArchivo();
                                 if(borrarArchivos()){
@@ -477,17 +489,27 @@ public class ManejoArchivo {
                     }
                 }
                 archivo = new RandomAccessFile(rutaBase + nombreArchivo, "rw");
-		System.out.println("Bienvenido (a)");
+                JOptionPane.showMessageDialog(null,  "Bienvenido (a)", "Inicio",JOptionPane.INFORMATION_MESSAGE );
+		//System.out.println("Bienvenido (a)");
 		Atributo at = entidad.getAtributos().get(0);
                 do{
                     try{
-			System.out.println(" 1. ---------------------\t\tAgregar");
-			System.out.println(" 2. ----------------------\t\tListar");
-			System.out.println(" 3. ----------------------\t\tBuscar");
-			System.out.println(" 4. -------------------\t\tModificar");
-			System.out.println(" 0. ---\t\tRegresar al menu anterior");
-                        System.out.println(" Seleccione su opcion: ");
-			opcion = sc.nextInt();
+                        opcion = Integer.parseInt(JOptionPane.showInputDialog(null, 
+                                " 1. ---------------------\t\tAgregar \n" 
+                        + " 2. ----------------------\t\tListar \n"
+                        + " 3. ----------------------\t\tBuscar \n"
+                        + " 4. -------------------\t\tModificar \n"
+                        + " 0. ---\t\tRegresar al menu anterior \n"
+                        + " Seleccione su opcion: "," Menu de Registros ", JOptionPane.INFORMATION_MESSAGE
+                        
+                        ));
+			//System.out.println(" 1. ---------------------\t\tAgregar");
+			//System.out.println(" 2. ----------------------\t\tListar");
+			//System.out.println(" 3. ----------------------\t\tBuscar");
+			//System.out.println(" 4. -------------------\t\tModificar");
+			//System.out.println(" 0. ---\t\tRegresar al menu anterior");
+                        //System.out.println(" Seleccione su opcion: ");
+			//opcion = sc.nextInt();
                         
                         switch(opcion){
                             case 0:
@@ -500,28 +522,33 @@ public class ManejoArchivo {
                                 listarRegistros(entidad);
                                 break;
                             case 3:
-                                System.out.println(" Se hara la busqueda en la primera columna ");
-			        System.out.println(" Ingrese " + at.getNombre().trim() + " a buscar");
+                                JOptionPane.showInputDialog(null, " Se hara la busqueda en la primera columna. \n " + " Ingrese " + at.getNombre().trim() + " a buscar"," Buscar ", JOptionPane.INFORMATION_MESSAGE);
+                                //System.out.println(" Se hara la busqueda en la primera columna ");
+			        //System.out.println(" Ingrese " + at.getNombre().trim() + " a buscar");
 				// sc.nextLine();
 				// encontrarRegistro(carne);
                                 break;
                             case 4:
-                                System.out.println(" Ingrese el carne a modificar: ");
+                                JOptionPane.showInputDialog(null, " Ingrese el carne a modificar: " ," Modificar ", JOptionPane.INFORMATION_MESSAGE);
+                                //System.out.println(" Ingrese el carne a modificar: ");
 				// carne = sc.nextInt();
 				// sc.nextLine();
 				// modificarRegistro(carne);
                                 break;
                             default:
-                                System.out.println(" Opcion invalida. :(");
+                                JOptionPane.showMessageDialog(null,  " Opcion invalida. :(", "Error ",JOptionPane.ERROR_MESSAGE );
+                                //System.out.println(" Opcion invalida. :(");
                                 break;
                         }
                     }catch(Exception e){  // capturar cualquier excepcion que ocurra
-                        System.out.println("Error: " + e.getMessage());
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+                        //System.out.println("Error: " + e.getMessage());
                     }
                 }while(opcion != 0);
                 archivo.close();
             }catch(Exception e){ // capturar cualquier excepcion que ocurra
-                System.out.println("Error: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+                //System.out.println("Error: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -536,7 +563,8 @@ public class ManejoArchivo {
 		String temporalString = "";
                 for(Atributo atributo : entidad.getAtributos()){
                     valido = false;
-		    System.out.println(" Ingrese " + atributo.getNombre().trim());
+                    JOptionPane.showInputDialog(null, " Ingrese " + atributo.getNombre().trim() ," Guardar Registro ", JOptionPane.INFORMATION_MESSAGE);
+		    //System.out.println(" Ingrese " + atributo.getNombre().trim());
                     while(!valido){
                         try{
                             switch(atributo.getTipoDato()){
@@ -555,7 +583,8 @@ public class ManejoArchivo {
                                         temporalString = sc.nextLine();
 					longitud = temporalString.length();
                                         if(longitud <= 1 || longitud > atributo.getLongitud()){
-                                            System.out.println(" La longitud de " + atributo.getNombre().trim() + " no es valida [1 - " + atributo.getLongitud() + "]");
+                                            JOptionPane.showMessageDialog(null, " La longitud de " + atributo.getNombre().trim() + " no es valida [1 - " + atributo.getLongitud() + "]", "Error ",JOptionPane.ERROR_MESSAGE );
+                                            //System.out.println(" La longitud de " + atributo.getNombre().trim() + " no es valida [1 - " + atributo.getLongitud() + "]");
                                         }
                                     }while(longitud <= 0 || longitud > atributo.getLongitud());
                                     // arreglo de bytes de longitud segun definida
@@ -578,8 +607,9 @@ public class ManejoArchivo {
                                     Date date = null;
 				    temporalString = "";
                                     while(date == null){
-                                        System.out.println("Formato de fecha: " + formatoFecha);
-					temporalString = sc.nextLine();
+                                        temporalString = JOptionPane.showInputDialog(null, "Formato de fecha: " + formatoFecha ," Date ", JOptionPane.INFORMATION_MESSAGE);
+                                        //System.out.println("Formato de fecha: " + formatoFecha);
+					//temporalString = sc.nextLine();
 					date = stringToDate(temporalString);
                                     }
                                     bytesString = new byte[atributo.getBytes()];
@@ -593,7 +623,8 @@ public class ManejoArchivo {
                                         temporalString = sc.nextLine();
 					longitud = temporalString.length();//length se obtiene la longitud de una cadena
                                         if(longitud < 1 || longitud > 1){
-                                            System.out.println(" Solo se permite un caracter. ");
+                                            JOptionPane.showMessageDialog(null, " Solo se permite un caracter. ", "Error ",JOptionPane.ERROR_MESSAGE );
+                                            //System.out.println(" Solo se permite un caracter. ");
                                         }
                                     }while(longitud < 1 || longitud > 1);
                                     byte caracter = (byte) temporalString.charAt(0);//charAr implementó un método que recibe el índice o posición del carácter deseado en la cadena.
@@ -602,8 +633,9 @@ public class ManejoArchivo {
                             }
                             valido = true;
                         }catch(Exception e){
-                            System.out.println(" Error " + e.getMessage() + " al capturar tipo de dato, vuelva a ingresar el valor: ");
-                            sc.nextLine();
+                            JOptionPane.showMessageDialog(null, " Error " + e.getMessage() + " al capturar tipo de dato, vuelva a ingresar el valor: ", "Error ",JOptionPane.ERROR_MESSAGE );
+                            //System.out.println(" Error " + e.getMessage() + " al capturar tipo de dato, vuelva a ingresar el valor: ");
+                            //sc.nextLine(); 
                         }
                     }// end while
                 }// end for
@@ -611,7 +643,8 @@ public class ManejoArchivo {
 		resultado = true;
             }catch(Exception e){
                 resultado = false;
-		System.out.println(" Error al agregar el registro " + e.getMessage());
+                JOptionPane.showMessageDialog(null, " Error al agregar el registro " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+		//System.out.println(" Error al agregar el registro " + e.getMessage());
             }
             return resultado;
         }
@@ -619,8 +652,9 @@ public class ManejoArchivo {
         public void listarRegistros(Entidad entidad) throws IOException{
             try{
                 long longitud = archivo.length(); //length se obtiene la longitud de una cadena
-                if(longitud <= 0){
-                   System.out.println(" No hay registros.");
+                if(longitud <= 0){ 
+                   JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
+                   //System.out.println(" No hay registros.");
 		   return; // finalizar el procedimiento 
                 }
                 archivo.seek(0); // posicionarse al principio del archivo
@@ -674,7 +708,8 @@ public class ManejoArchivo {
 		    System.out.println(linea);
                 }
             }catch(Exception e){ //encuentra posibles errores
-                System.out.println(" Error: " + e.getMessage());
+                JOptionPane.showMessageDialog(null, " Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+                //System.out.println(" Error: " + e.getMessage());
             }
         }
         
@@ -682,7 +717,8 @@ public class ManejoArchivo {
             try{
                 long longitud = archivo.length();//length se usa para obtener la longitud de una cadena Java
                 if(longitud <= 0){
-                    System.out.println("No hay registros");
+                    JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
+                    //System.out.println("No hay registros");
 		    return; // finalizar el procedimiento
                 }
                 // bandera para verificar que el registro fue encontrado
@@ -703,7 +739,7 @@ public class ManejoArchivo {
 		    al.setBytesFechaNacimiento(bFecha);
                     if(al.getCarne() == carne){
                         // imprimir los campos del registro
-			System.out.println(" Carne: " + al.getCarne());
+			System.out.println(" Carne: " + al.getCarne()); //Verificar esto***
 			System.out.println(" Nombre: " + al.getNombre());
 			System.out.println(" Fecha de nacimiento: " + dateToString(al.getFechaNacimiento())); //ToString se utiliza para convertir a String (es decir, a una cadena de texto) cualquier objeto Java.
 
@@ -716,10 +752,12 @@ public class ManejoArchivo {
                 }
                 // solo si el registro no se encontro imprimir un mensaje
                 if(!bndEncontrado){  // esto es equivalente a (bndEncontrado == false)
-                    System.out.println(" No se encontro el carne indicado, por favor verifique. ");
+                    JOptionPane.showMessageDialog(null, " No se encontro el carne indicado, por favor verifique. ", "Error ",JOptionPane.ERROR_MESSAGE );
+                    //System.out.println(" No se encontro el carne indicado, por favor verifique. ");
                 }
         }catch(Exception e){
-            System.out.println(" Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+            //System.out.println(" Error: " + e.getMessage());
         }
     }
         //Modificando registro
@@ -743,7 +781,7 @@ public class ManejoArchivo {
 		    archivo.readByte();// leer el cambio de linea
 		    al.setBytesFechaNacimiento(bFecha);
                     if(al.getCarne() == carne){
-                        System.out.println(" Si no desea modificar el campo presione enter");
+                        System.out.println(" Si no desea modificar el campo presione enter");//Revisar ***
 			System.out.println(" Ingrese el nombre");
 			String tmpStr = "";
 			int longitud2 = 0;
@@ -752,7 +790,8 @@ public class ManejoArchivo {
                            tmpStr = sc.nextLine();
 			   longitud2 = tmpStr.length();//length se usa para obtener la longitud de una cadena 
                            if(longitud2 > 50){
-                               System.out.println(" La longitud del nombre no es valida [1 - 50]");
+                               JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [1 - 50]", "Error ",JOptionPane.ERROR_MESSAGE );
+                               //System.out.println(" La longitud del nombre no es valida [1 - 50]");
                            }
                         }while(longitud2 > 50);
                         if(longitud2 > 0){
@@ -767,7 +806,8 @@ public class ManejoArchivo {
 			    archivo.write(al.getBytesNombre());
 			    bndModificado = true;
                         }
-                        System.out.println(" Ingrese la fecha (" + formatoFecha + ")");
+                        JOptionPane.showInputDialog(null, " Ingrese la fecha" + (" + formatoFecha + ")," Date ", JOptionPane.INFORMATION_MESSAGE);
+                        //System.out.println(" Ingrese la fecha (" + formatoFecha + ")");
 			tmpStr = sc.nextLine();
                         if(tmpStr.length() > 0){
                             Date date = null;
@@ -783,7 +823,8 @@ public class ManejoArchivo {
                         }
                         // imprimir los campos del registro
 			if (bndModificado){ // equivalente a (bndModificado == true)
-                            System.out.println(" El registro fue modificado correctamente, los nuevos datos son:");
+                            JOptionPane.showMessageDialog(null, " El registro fue modificado correctamente, los nuevos datos son:", " Actualizacion ",JOptionPane.INFORMATION_MESSAGE );
+                            //System.out.println(" El registro fue modificado correctamente, los nuevos datos son:");
                         }
                         System.out.println(" Carne: " + al.getCarne());
 			System.out.println(" Nombre: " + al.getNombre());
@@ -797,10 +838,12 @@ public class ManejoArchivo {
                 }
                 // solo si el registro no se encontro imprimir un mensaje
 		if (!bndEncontrado){// esto es equivalente a (bndEncontrado == false)
-                    System.out.println(" No se encontro el carne indicado, por favor verifique.");
+                    JOptionPane.showMessageDialog(null," No se encontro el carne indicado, por favor verifique.", "Error ",JOptionPane.ERROR_MESSAGE );
+                    //System.out.println(" No se encontro el carne indicado, por favor verifique.");
                 }
             }catch(Exception e){
-                System.out.println("Error: " + e.getMessage());
+                JOptionPane.showMessageDialog(null,"Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+                //System.out.println("Error: " + e.getMessage());
             }
         }
         
@@ -810,7 +853,8 @@ public class ManejoArchivo {
                 date = format.parse(stringFecha);
             }catch(Exception e){
                 date = null;
-		System.out.println(" Error en fecha: " + e.getMessage());
+                JOptionPane.showMessageDialog(null," Error en fecha: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
+		//System.out.println(" Error en fecha: " + e.getMessage());
             }
 	    return date;
         }
