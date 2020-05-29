@@ -36,13 +36,10 @@ public class ManejoArchivo {
         //jf1.setVisible (false);
         if(ma.validarDefinicion()){
             jf1.setVisible (true);
-            
-            ma.menuDefinicion(false);
+            //ma.menuDefinicion(false);
         }else{
-            
-            ma.menuDefinicion(false);
+            //ma.menuDefinicion(false);
         }
-        System.exit(0); //finaliza aplicacion
     }
     //Metodos para definicion
     boolean validarDefinicion() throws FileNotFoundException, IOException{
@@ -107,17 +104,29 @@ public class ManejoArchivo {
     }
     //Mostrar entidad
     private void mostrarEntidad(Entidad entidad){
-        System.out.println(" Indice: " + entidad.getIndice());
-        System.out.println(" Nombre: " + entidad.getNombre());
-        System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
-        System.out.println(" Atributos: ");
+        JFrame2 jf2 = new JFrame2();
+        jf2.txtPanel();
+        //txtArea.append(" Indice: " + entidad.getIndice());
+        jf2.txtPanel.setIndice(" Indice: " + entidad.getIndice());
+        jf2.txtPanel.setNombre(" Nombre: " + entidad.getNombre());
+        jf2.txtPanel.setCantidad(" Cantidad de atributos: " + entidad.getCantidad());
+        jf2.txtPanel(" Atributos: ");
+        //System.out.println(" Indice: " + entidad.getIndice());
+        //System.out.println(" Nombre: " + entidad.getNombre());
+        //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+        //System.out.println(" Atributos: ");
         int i = 1;
         for(Atributo atributo : entidad.getAtributos()){
-            System.out.println(" No." + i);
-            System.out.println(" Nombre: " + atributo.getNombre());
-            System.out.println(" Tipo de dato: " + atributo.getNombreTipoDato());
+            jf2.txtPanel(" No." + i);
+            jf2.txtPanel.setNombre(" Nombre: " + atributo.getNombre());
+            jf2.txtPanel.setNombreTipoDato(" Tipo de dato: " + atributo.getNombreTipoDato());
+            
+            //System.out.println(" No." + i);
+            //System.out.println(" Nombre: " + atributo.getNombre());
+            //System.out.println(" Tipo de dato: " + atributo.getNombreTipoDato());
             if (atributo.isRequiereLongitud()){
-                System.out.println(" Longitud: " + atributo.getLongitud());
+                jf2.txtPanel(" Longitud: " + atributo.getLongitud());
+                //System.out.println(" Longitud: " + atributo.getLongitud());
             }
             i++;
         }
@@ -136,7 +145,7 @@ public class ManejoArchivo {
                 //stringNombre = sc.nextLine();
                 longitud = stringNombre.length();
                 if(longitud < 2 || longitud >30){
-                   JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]");
+                   JOptionPane.showInputDialog(null, " La longitud del nombre no es valida [3 - 30]"," Alerta ", JOptionPane.WARNING_MESSAGE);//REVISAR**
                    //System.out.println(" La logitud del nombre no es valida [3 - 30]");
                 }else{
                     if(stringNombre.contains(" ")){ //stringNombre contiene espacios vacios
@@ -369,6 +378,9 @@ public class ManejoArchivo {
                             }
                             break;
                         case 3:
+                            JFrame2 jf2 = new JFrame2();
+                            jf2.txtPanel();
+                            jf2.setVisible (true);
                             if(listaEntidades.size() > 0){
                                 int temporalInt = 0;
                                 temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Listar ", JOptionPane.INFORMATION_MESSAGE));
@@ -378,9 +390,12 @@ public class ManejoArchivo {
                                     }
                                 }else{
                                     for(Entidad entidad : listaEntidades){
-                                    System.out.println(" Indice: " + entidad.getIndice());
-				    System.out.println(" Nombre: " + entidad.getNombre());
-				    System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+                                        jf2.txtPanel.setIndice(" Indice: " + entidad.getIndice());
+                                        jf2.txtPanel.setNombre(" Nombre: " + entidad.getNombre());
+                                        jf2.txtPanel.setCantidad(" Cantidad de atributos: " + entidad.getCantidad());
+                                    //System.out.println(" Indice: " + entidad.getIndice());
+				    //System.out.println(" Nombre: " + entidad.getNombre());
+				    //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
                                     }
                                 }
                             }else{
