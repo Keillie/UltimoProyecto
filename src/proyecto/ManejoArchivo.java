@@ -29,7 +29,7 @@ public class ManejoArchivo {
     static DateFormat format = new SimpleDateFormat(formatoFecha);
     
     private List<Entidad> listaEntidades = new ArrayList<>(); //Clase entidad para lista.
-    
+    /*
     public static void main (String [] args) throws IOException{
         ManejoArchivo ma = new ManejoArchivo(); //Instanciando ManejoArchivo
         JFrame1 jf1 = new JFrame1();
@@ -40,7 +40,9 @@ public class ManejoArchivo {
         }else{
             //ma.menuDefinicion(false);
         }
+*/
     }
+/*
     //Metodos para definicion
     boolean validarDefinicion() throws FileNotFoundException, IOException{
         boolean respuesta = false;
@@ -104,29 +106,22 @@ public class ManejoArchivo {
     }
     //Mostrar entidad
     private void mostrarEntidad(Entidad entidad){
-        JFrame2 jf2 = new JFrame2();
-        jf2.txtPanel();
+        
+        
         //txtArea.append(" Indice: " + entidad.getIndice());
-        jf2.txtPanel.setIndice(" Indice: " + entidad.getIndice());
-        jf2.txtPanel.setNombre(" Nombre: " + entidad.getNombre());
-        jf2.txtPanel.setCantidad(" Cantidad de atributos: " + entidad.getCantidad());
-        jf2.txtPanel(" Atributos: ");
-        //System.out.println(" Indice: " + entidad.getIndice());
-        //System.out.println(" Nombre: " + entidad.getNombre());
-        //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
-        //System.out.println(" Atributos: ");
+        
+        System.out.println(" Indice: " + entidad.getIndice());
+        System.out.println(" Nombre: " + entidad.getNombre());
+        System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+        System.out.println(" Atributos: ");
         int i = 1;
         for(Atributo atributo : entidad.getAtributos()){
-            jf2.txtPanel(" No." + i);
-            jf2.txtPanel.setNombre(" Nombre: " + atributo.getNombre());
-            jf2.txtPanel.setNombreTipoDato(" Tipo de dato: " + atributo.getNombreTipoDato());
             
-            //System.out.println(" No." + i);
-            //System.out.println(" Nombre: " + atributo.getNombre());
-            //System.out.println(" Tipo de dato: " + atributo.getNombreTipoDato());
+            System.out.println(" No." + i);
+            System.out.println(" Nombre: " + atributo.getNombre());
+            System.out.println(" Tipo de dato: " + atributo.getNombreTipoDato());
             if (atributo.isRequiereLongitud()){
-                jf2.txtPanel(" Longitud: " + atributo.getLongitud());
-                //System.out.println(" Longitud: " + atributo.getLongitud());
+                System.out.println(" Longitud: " + atributo.getLongitud());
             }
             i++;
         }
@@ -189,15 +184,6 @@ public class ManejoArchivo {
                             + " \n " + TipoDato.FLOAT.getValue() + " ---------- " + TipoDato.FLOAT.name()
                             + " \n " + TipoDato.DATE.getValue() + " ---------- " + TipoDato.DATE.name()
                             + " \n " + TipoDato.CHAR.getValue() + " ---------- " + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE)));
-                //System.out.println(" Seleccione el tipo de dato. ");
-                //System.out.println(TipoDato.INT.getValue() + "----------" + TipoDato.INT.name());
-                //System.out.println(TipoDato.LONG.getValue() + "----------" + TipoDato.LONG.name());
-                //System.out.println(TipoDato.STRING.getValue() + "----------" + TipoDato.STRING.name());
-                //System.out.println(TipoDato.DOUBLE.getValue() + "----------" + TipoDato.DOUBLE.name());
-                //System.out.println(TipoDato.FLOAT.getValue() + "----------" + TipoDato.FLOAT.name());
-                //System.out.println(TipoDato.DATE.getValue() + "----------" + TipoDato.DATE.name());
-                //System.out.println(TipoDato.CHAR.getValue() + "----------" + TipoDato.CHAR.name());
-                //atributo.setValorTipoDato(sc.nextInt());
                 if(atributo.isRequiereLongitud()){
                     atributo.setLongitud(Integer.parseInt(JOptionPane.showInputDialog(null," Ingrese la longitud que desea. "," Longitud ", JOptionPane.INFORMATION_MESSAGE)));
                     //System.out.println(" Ingrese la longitud que desea. ");
@@ -338,8 +324,9 @@ public class ManejoArchivo {
                 e.printStackTrace();
             }
         }
+
         
-        void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
+    private void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
             int opciones = 1;//int opciones = 1;
             do{
                 try{
@@ -378,9 +365,6 @@ public class ManejoArchivo {
                             }
                             break;
                         case 3:
-                            JFrame2 jf2 = new JFrame2();
-                            jf2.txtPanel();
-                            jf2.setVisible (true);
                             if(listaEntidades.size() > 0){
                                 int temporalInt = 0;
                                 temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Listar ", JOptionPane.INFORMATION_MESSAGE));
@@ -389,13 +373,11 @@ public class ManejoArchivo {
                                         mostrarEntidad(entidad);
                                     }
                                 }else{
+                                    
                                     for(Entidad entidad : listaEntidades){
-                                        jf2.txtPanel.setIndice(" Indice: " + entidad.getIndice());
-                                        jf2.txtPanel.setNombre(" Nombre: " + entidad.getNombre());
-                                        jf2.txtPanel.setCantidad(" Cantidad de atributos: " + entidad.getCantidad());
-                                    //System.out.println(" Indice: " + entidad.getIndice());
-				    //System.out.println(" Nombre: " + entidad.getNombre());
-				    //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+                                    System.out.println(" Indice: " + entidad.getIndice());
+				    System.out.println(" Nombre: " + entidad.getNombre());
+				    System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
                                     }
                                 }
                             }else{
@@ -881,4 +863,4 @@ public class ManejoArchivo {
 	}
         
         
-}
+} */
