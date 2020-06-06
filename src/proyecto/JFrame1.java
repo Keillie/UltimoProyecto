@@ -1,6 +1,6 @@
 
 package proyecto;
-
+//Librerias a utilizar en todo el programa.
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,26 +19,10 @@ import javax.swing.JOptionPane;
 
 public class JFrame1 extends javax.swing.JFrame {
 
-    //variables globales que se usaran en todo el programa.
-    Scanner sc = new Scanner(System.in);
-    RandomAccessFile archivo = null, entidades = null, atributos = null;
-    private final String rutaBase = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal";
-    
-    private final String rutaEntidades = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\entidades.dat";
-    
-    private final String rutaAtributos = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\atributos.dat";
-    
-    private final int totalBytes = 83, bytesEntidades = 47, bytesAtributos = 43;
-    private final static String formatoFecha = "dd/MM/yyyy";
-    static DateFormat format = new SimpleDateFormat(formatoFecha);
-    
-    private List<Entidad> listaEntidades = new ArrayList<>(); //Clase entidad para lista.
-    
     public JFrame1() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -47,13 +31,14 @@ public class JFrame1 extends javax.swing.JFrame {
         btnMenu = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtArea = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtPane = new javax.swing.JTextPane();
+        area1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 153))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnMenu.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnMenu.setText("MENU");
@@ -62,6 +47,7 @@ public class JFrame1 extends javax.swing.JFrame {
                 btnMenuActionPerformed(evt);
             }
         });
+        jPanel1.add(btnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 90, 40));
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSalir.setText("SALIR");
@@ -70,46 +56,19 @@ public class JFrame1 extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 90, 40));
 
-        txtArea.setColumns(20);
-        txtArea.setRows(5);
-        jScrollPane2.setViewportView(txtArea);
+        area1.setEditable(false);
+        area1.setBackground(new java.awt.Color(204, 204, 204));
+        area1.setColumns(20);
+        area1.setRows(5);
+        area1.setToolTipText("Entidad/Atributos");
+        area1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jScrollPane2.setViewportView(area1);
 
-        jScrollPane1.setViewportView(txtPane);
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 550, 430));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(175, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -122,22 +81,18 @@ public class JFrame1 extends javax.swing.JFrame {
         //this.setVisible(false);
         //JFrame2 jf2 = new JFrame2();
         //jf2.setVisible(true);
-        JFrame1 jf1  = new JFrame1();
+        JFrame1 jf1 = new JFrame1();
         try {
-            if (jf1.validarDefinicion()) {
-                jf1.menuDefinicion(true);
+            if (validarDefinicion()) { 
+                menuDefinicion(true); //utilizando de forma booleano para abrir el metodo de menuDefinicion
             } else {
-                jf1.menuDefinicion(false);
+                menuDefinicion(false);
             }
         } catch (IOException ex) {
-            Logger.getLogger(JFrame1.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null," Error " + ex.getMessage());
         }
-		//System.exit(0); // finalize application
     }//GEN-LAST:event_btnMenuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -146,16 +101,27 @@ public class JFrame1 extends javax.swing.JFrame {
             }
         });
     }
+
+//variables globales que se usaran en todo el programa.
+    Scanner sc = new Scanner(System.in);
+    RandomAccessFile archivo = null, entidades = null, atributos = null;
+    private final String rutaBase = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal";
+    private final String rutaEntidades = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\entidades.dat";
+    private final String rutaAtributos = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\atributos.dat";
+    private final int totalBytes = 83, bytesEntidades = 47, bytesAtributos = 43;
+    private final static String formatoFecha = "dd/MM/yyyy";
+    static DateFormat format = new SimpleDateFormat(formatoFecha);
+    private List<Entidad> listaEntidades = new ArrayList<>(); //Clase entidad para lista.
+    
     //Metodos para definicion
     boolean validarDefinicion() throws FileNotFoundException, IOException{
-        boolean respuesta = false;
+        boolean respuesta = false; //variable boolena
         try{
-            entidades = new RandomAccessFile(rutaEntidades, "rw");
+            entidades = new RandomAccessFile(rutaEntidades, "rw"); //rw archivos de escritura y lectura
             atributos = new RandomAccessFile(rutaAtributos, "rw");
             long longitud = entidades.length();//lengh para obtener la logitud de la cadena.
             if (longitud <= 0){
                 JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
-                //System.out.println("No hay registros.");
                 respuesta = false; //finaliza los procedimientos
             }
             if (longitud  >= bytesEntidades){
@@ -176,7 +142,6 @@ public class JFrame1 extends javax.swing.JFrame {
                     long longitudAtributos = atributos.length();//length se obtiene la longitud de una cadena
                     if(longitudAtributos <= 0){
                         JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
-                        //System.out.println("No hay registros. ");
                         respuesta = false; //finalizar el procedimiento.
                         break;
                     }
@@ -209,40 +174,31 @@ public class JFrame1 extends javax.swing.JFrame {
     }
     //Mostrar entidad
     private void mostrarEntidad(Entidad entidad){
-        
-        txtArea.append(" Indice: " + entidad.getIndice());
-        txtArea.append(" Nombre: " + entidad.getNombre());
-        txtArea.append(" Cantidad de atributos: " + entidad.getCantidad());
-        txtArea.append(" Atributos: ");
-        //txtArea.append(" Indice: " + entidad.getIndice());
-        
-        //System.out.println(" Indice: " + entidad.getIndice());
-        //System.out.println(" Nombre: " + entidad.getNombre());
-        //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
-        //System.out.println(" Atributos: ");
+        area1.append(" Entidad:"); //area1 imprimira en el jtextArea adjunta o imprimi lo que esta dentro de las comillas
+        area1.append(" Indice: " + entidad.getIndice()+"\n");
+        area1.append(" Nombre: " + entidad.getNombre()+ " \n");
+        area1.append(" Cantidad de atributos: " + entidad.getCantidad()+ " \n");
+        area1.append(" \n");
+        area1.append(" Atributos: "+ " \n");
         int i = 1;
         for(Atributo atributo : entidad.getAtributos()){
-            txtArea.append(" No." + i);
-            txtArea.append(" Nombre: " + atributo.getNombre());
-            txtArea.append(" Tipo de dato: " + atributo.getNombreTipoDato());
-            //System.out.println(" No." + i);
-            //System.out.println(" Nombre: " + atributo.getNombre());
-            //System.out.println(" Tipo de dato: " + atributo.getNombreTipoDato());
+            area1.append(" No." + i + " \n");
+            area1.append(" Nombre: " + atributo.getNombre()+ " \n");
+            area1.append(" Tipo de dato: " + atributo.getNombreTipoDato()+ " \n");
             if (atributo.isRequiereLongitud()){
-                txtArea.append(" Longitud: " + atributo.getLongitud());
-                //System.out.println(" Longitud: " + atributo.getLongitud());
+                area1.append(" Longitud: " + atributo.getLongitud()+ " \n");
+                area1.append(" \n");
             }
             i++;
         }
     }
+    //Nueva entidad a agregar
     private boolean agregarEntidad() throws IOException{
         boolean resultado = false;
         try{
-            
             Entidad entidad = new Entidad(); //Instanciando clase.
             entidad.setIndice(listaEntidades.size() + 1);
             String stringNombre = JOptionPane.showInputDialog(null," Ingrese el nombre de la entidad: "," Entidad ", JOptionPane.INFORMATION_MESSAGE);
-            //System.out.println(" Ingrese el nombre de la entidad: ");
             //String stringNombre = "";
             int longitud = 0;
             do{
@@ -250,18 +206,15 @@ public class JFrame1 extends javax.swing.JFrame {
                 longitud = stringNombre.length();
                 if(longitud < 2 || longitud >30){
                    JOptionPane.showInputDialog(null, " La longitud del nombre no es valida [3 - 30]"," Alerta ", JOptionPane.WARNING_MESSAGE);//REVISAR**
-                   //System.out.println(" La logitud del nombre no es valida [3 - 30]");
                 }else{
                     if(stringNombre.contains(" ")){ //stringNombre contiene espacios vacios
                         JOptionPane.showMessageDialog(null, " El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
-                        //System.out.println(" El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
                         longitud = 0;
                     }
                 }
             }while (longitud < 2 || longitud > 30);
             entidad.setNombre(stringNombre);
-            JOptionPane.showMessageDialog(null, " Atributos de la entidad.");
-            //System.out.println(" Atributos de la entidad.");
+            JOptionPane.showMessageDialog(null, " Atributos de la entidad.", " Atributo ", JOptionPane.INFORMATION_MESSAGE);
             int bndDetener = 0; //se presionara 0 para detener el proceso.
             do{
                 Atributo atributo = new Atributo(); //Instanciando clase Atributo
@@ -285,33 +238,26 @@ public class JFrame1 extends javax.swing.JFrame {
                 }while (longitud < 2 || longitud > 30); //hacer mientras longitud sea menor que 2 o longitud sea mayor que 30
                 atributo.setNombre(stringNombre);
                 
-                atributo.setValorTipoDato(Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el tipo de dato: "
-                            + " \n " + TipoDato.INT.getValue() + " ---------- " + TipoDato.INT.name()
-                            + " \n " + TipoDato.LONG.getValue() + " ---------- " + TipoDato.LONG.name()
-                            + " \n " + TipoDato.STRING.getValue() + " ---------- " + TipoDato.STRING.name()
-                            + " \n " + TipoDato.DOUBLE.getValue() + " ---------- " + TipoDato.DOUBLE.name()
-                            + " \n " + TipoDato.FLOAT.getValue() + " ---------- " + TipoDato.FLOAT.name()
-                            + " \n " + TipoDato.DATE.getValue() + " ---------- " + TipoDato.DATE.name()
-                            + " \n " + TipoDato.CHAR.getValue() + " ---------- " + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE)));
+               atributo.setValorTipoDato(Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el tipo de dato: "
+                       + " \n " + TipoDato.INT.getValue() + " ---------- " + TipoDato.INT.name()
+                       + " \n " + TipoDato.LONG.getValue() + " ---------- " + TipoDato.LONG.name()
+                       + " \n " + TipoDato.STRING.getValue() + " ---------- " + TipoDato.STRING.name()
+                       + " \n " + TipoDato.DOUBLE.getValue() + " ---------- " + TipoDato.DOUBLE.name()
+                       + " \n " + TipoDato.FLOAT.getValue() + " ---------- " + TipoDato.FLOAT.name()
+                       + " \n " + TipoDato.DATE.getValue() + " ---------- " + TipoDato.DATE.name()
+                       + " \n " + TipoDato.CHAR.getValue() + " ---------- " + TipoDato.CHAR.name()," Tipo de Dato ", JOptionPane.INFORMATION_MESSAGE)));
                 if(atributo.isRequiereLongitud()){
                     atributo.setLongitud(Integer.parseInt(JOptionPane.showInputDialog(null," Ingrese la longitud que desea. "," Longitud ", JOptionPane.INFORMATION_MESSAGE)));
-                    //System.out.println(" Ingrese la longitud que desea. ");
-                    //atributo.setLongitud(sc.nextInt());
                 }else{
                     atributo.setLongitud(0);
                 }
                 atributo.setNombreTipoDato();
                 entidad.setAtributo(atributo);
                 bndDetener = Integer.parseInt(JOptionPane.showInputDialog(null," Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0", JOptionPane.INFORMATION_MESSAGE));
-                //System.out.println(" Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0");
-                //bndDetener = sc.nextInt();
             }while(bndDetener != 0); //se realizara mientras el valor ingresado sea diferente a 0
             JOptionPane.showMessageDialog(null, " Los datos a registrar son: ");
-            //System.out.println(" Los datos a registrar son: ");
 	    mostrarEntidad(entidad);
-            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", " Guardar o borrar", JOptionPane.INFORMATION_MESSAGE));
-	    //System.out.println(" Presione 1 para guardar y 0 para cancelar el proceso.");
-	    //longitud = sc.nextInt();
+            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", " Guardar/Borrar", JOptionPane.INFORMATION_MESSAGE));
             if(longitud == 1){
                 // primero guardar atributos
 		// establecer la posicion inicial donde se va a guardar
@@ -334,13 +280,10 @@ public class JFrame1 extends javax.swing.JFrame {
 		listaEntidades.add(entidad);
 		resultado = true;
             }else{
-                JOptionPane.showMessageDialog(null, " No se guardo la entidad debido a que el usuario decidio cancelarlo. ");
-                //System.out.println(" No se guardo la entidad debido a que el usuario decidio cancelarlo. ");
+                JOptionPane.showMessageDialog(null, " No se guardo la entidad debido a que el usuario decidio cancelarlo. ", " No guardado ", JOptionPane.INFORMATION_MESSAGE);
+                area1.setText("");
 		resultado = false;
             }
-            JOptionPane.showInputDialog(null," Presione una tecla para continuar...", JOptionPane.INFORMATION_MESSAGE);
-            //System.out.println(" Presione una tecla para continuar...");
-	    System.in.read(); //lee exactamente un byte del flujo de entrada (teclado en este caso).
         }catch(Exception e){
             resultado = false;
             e.printStackTrace();
@@ -355,8 +298,6 @@ public class JFrame1 extends javax.swing.JFrame {
                         System.out.println(entidad.getIndice() + " --------- " + entidad.getNombre());
                     }
                     indice = Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione la entidad que desea modificar: ", JOptionPane.INFORMATION_MESSAGE));
-                    //System.out.println(" Seleccione la entidad que desea modificar: ");
-		    //indice = sc.nextInt();
                 }
                 Entidad entidad = null;//clase Entidad es igual a entidad inicializada como null
                 for(Entidad e : listaEntidades){
@@ -371,7 +312,6 @@ public class JFrame1 extends javax.swing.JFrame {
 		archivo.close();
                 if(longitudDatos > 0){
                     JOptionPane.showMessageDialog(null, " No es posible modificar la entidad debido a que ya tiene datos asociados");
-                    //System.out.println(" No es posible modificar la entidad debido a que ya tiene datos asociados");
                 }else{
                     // bandera para verificar que el registro fue encontrado
 		    boolean bndEncontrado = false, bndModificado = false;
@@ -392,7 +332,6 @@ public class JFrame1 extends javax.swing.JFrame {
 		       en.setPosicion(entidades.readLong());
                        if(entidad.getIndice() == en.getIndice()){
                            JOptionPane.showMessageDialog(null, " Si no desea modificar el campo presione enter: ");
-                           //System.out.println(" Si no desea modificar el campo presione enter");
                            String temporalString = JOptionPane.showInputDialog(null," Ingrese el nombre: ", JOptionPane.INFORMATION_MESSAGE);
 			   //System.out.println(" Ingrese el nombre: ");
 			   //String temporalString = "";
@@ -403,7 +342,6 @@ public class JFrame1 extends javax.swing.JFrame {
 			       longitud2 = temporalString.length(); //length se obtiene la longitud de una cadena
                                if(longitud2 == 1 || longitud2 > 30){
                                    JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [2 - 30]");
-                                   //System.out.println(" La longitud del nombre no es valida [2 - 30]");
                                }
                            }while(longitud2 == 1 || longitud2 > 30);
                            if(longitud2 > 0){
@@ -418,9 +356,7 @@ public class JFrame1 extends javax.swing.JFrame {
                            i = 1;
                            for(Atributo at : entidad.getAtributos()){
                                JOptionPane.showMessageDialog(null, " Modificando atributo 1");
-                               //System.out.println(" Modificando atributo 1");
-                               JOptionPane.showMessageDialog(null, at.getNombre().trim());
-			       //System.out.println(at.getNombre().trim());//trim de clase String elimina los espacios al prinpio y al final de las cadenas.
+                               JOptionPane.showMessageDialog(null, at.getNombre().trim());//trim de clase String elimina los espacios al prinpio y al final de las cadenas.
                            }
                            break;
                        }
@@ -453,7 +389,7 @@ public class JFrame1 extends javax.swing.JFrame {
                             break;
                         case 1:
                             if(agregarEntidad()){
-                            JOptionPane.showMessageDialog(null, " Entidad agregada con exito. ");
+                            JOptionPane.showMessageDialog(null, " Entidad agregada con exito. ",  " Guardando.. ",JOptionPane.INFORMATION_MESSAGE );
                             mostrarAgregarRegistro = true;
                         }
                             break;
@@ -482,16 +418,13 @@ public class JFrame1 extends javax.swing.JFrame {
                                 }else{
                                     
                                     for(Entidad entidad : listaEntidades){
-                                        txtArea.append(" Indice: " + entidad.getIndice());
-                                        txtArea.append(" Nombre: " + entidad.getNombre());
-                                        txtArea.append(" Cantidad de atributos: " + entidad.getCantidad());
-                                    //System.out.println(" Indice: " + entidad.getIndice());
-				    //System.out.println(" Nombre: " + entidad.getNombre());
-				    //System.out.println(" Cantidad de atributos: " + entidad.getCantidad());
+                                        area1.append(" Indice: " + entidad.getIndice());
+                                        area1.append(" Nombre: " + entidad.getNombre());
+                                        area1.append(" Cantidad de atributos: " + entidad.getCantidad());
                                     }
                                 }
                             }else{
-                                JOptionPane.showMessageDialog(null,  " No hay entidades registradas. ", " ",JOptionPane.INFORMATION_MESSAGE );
+                                JOptionPane.showMessageDialog(null,  " No hay entidades registradas. ", " Arvhivo vacio ",JOptionPane.INFORMATION_MESSAGE );
                             }
                             break;
                         case 4:
@@ -513,6 +446,7 @@ public class JFrame1 extends javax.swing.JFrame {
                                     listaEntidades = null;
 				    listaEntidades = new ArrayList<>();
 				    mostrarAgregarRegistro = false;
+                                    area1.setText("");
                                     JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando :D ",JOptionPane.INFORMATION_MESSAGE );
                                 }
                             }
@@ -595,7 +529,6 @@ public class JFrame1 extends javax.swing.JFrame {
                 }
                 archivo = new RandomAccessFile(rutaBase + nombreArchivo, "rw");
                 JOptionPane.showMessageDialog(null,  "Bienvenido (a)", "Inicio",JOptionPane.INFORMATION_MESSAGE );
-		//System.out.println("Bienvenido (a)");
 		Atributo at = entidad.getAtributos().get(0);
                 do{
                     try{
@@ -605,17 +538,7 @@ public class JFrame1 extends javax.swing.JFrame {
                         + " 3. ----------------------\t\tBuscar \n"
                         + " 4. -------------------\t\tModificar \n"
                         + " 0. ---\t\tRegresar al menu anterior \n"
-                        + " Seleccione su opcion: "," Menu de Registros ", JOptionPane.INFORMATION_MESSAGE
-                        
-                        ));
-			//System.out.println(" 1. ---------------------\t\tAgregar");
-			//System.out.println(" 2. ----------------------\t\tListar");
-			//System.out.println(" 3. ----------------------\t\tBuscar");
-			//System.out.println(" 4. -------------------\t\tModificar");
-			//System.out.println(" 0. ---\t\tRegresar al menu anterior");
-                        //System.out.println(" Seleccione su opcion: ");
-			//opcion = sc.nextInt();
-                        
+                        + " Seleccione su opcion: "," Menu de Registros ", JOptionPane.INFORMATION_MESSAGE));
                         switch(opcion){
                             case 0:
                                 System.out.println("");
@@ -642,18 +565,15 @@ public class JFrame1 extends javax.swing.JFrame {
                                 break;
                             default:
                                 JOptionPane.showMessageDialog(null,  " Opcion invalida. :(", "Error ",JOptionPane.ERROR_MESSAGE );
-                                //System.out.println(" Opcion invalida. :(");
                                 break;
                         }
                     }catch(Exception e){  // capturar cualquier excepcion que ocurra
                         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-                        //System.out.println("Error: " + e.getMessage());
                     }
                 }while(opcion != 0);
                 archivo.close();
             }catch(Exception e){ // capturar cualquier excepcion que ocurra
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-                //System.out.println("Error: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -669,7 +589,6 @@ public class JFrame1 extends javax.swing.JFrame {
                 for(Atributo atributo : entidad.getAtributos()){
                     valido = false;
                     JOptionPane.showInputDialog(null, " Ingrese " + atributo.getNombre().trim() ," Guardar Registro ", JOptionPane.INFORMATION_MESSAGE);
-		    //System.out.println(" Ingrese " + atributo.getNombre().trim());
                     while(!valido){
                         try{
                             switch(atributo.getTipoDato()){
@@ -944,11 +863,9 @@ public class JFrame1 extends javax.swing.JFrame {
                 // solo si el registro no se encontro imprimir un mensaje
 		if (!bndEncontrado){// esto es equivalente a (bndEncontrado == false)
                     JOptionPane.showMessageDialog(null," No se encontro el carne indicado, por favor verifique.", "Error ",JOptionPane.ERROR_MESSAGE );
-                    //System.out.println(" No se encontro el carne indicado, por favor verifique.");
                 }
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,"Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-                //System.out.println("Error: " + e.getMessage());
             }
         }
         public Date stringToDate (String stringFecha){
@@ -958,7 +875,6 @@ public class JFrame1 extends javax.swing.JFrame {
             }catch(Exception e){
                 date = null;
                 JOptionPane.showMessageDialog(null," Error en fecha: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-		//System.out.println(" Error en fecha: " + e.getMessage());
             }
 	    return date;
         }
@@ -970,13 +886,11 @@ public class JFrame1 extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea area1;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSalir;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtArea;
-    private javax.swing.JTextPane txtPane;
     // End of variables declaration//GEN-END:variables
 
 }
