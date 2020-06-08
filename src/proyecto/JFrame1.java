@@ -16,11 +16,23 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showConfirmDialog;
 
 public class JFrame1 extends javax.swing.JFrame {
-
+    //variables globales que se usaran en todo el programa.
+    Scanner sc = new Scanner(System.in);//Pedir datos
+    RandomAccessFile archivo = null, entidades = null, atributos = null;
+    private final String rutaBase = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal";
+    private final String rutaEntidades = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\entidades.dat";
+    private final String rutaAtributos = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\atributos.dat";
+    private final int totalBytes = 83, bytesEntidades = 47, bytesAtributos = 43;
+    private final static String formatoFecha = "dd/MM/yyyy";
+    static DateFormat format = new SimpleDateFormat(formatoFecha);
+    private List<Entidad> listaEntidades = new ArrayList<>(); //Clase entidad para lista.
+    
     public JFrame1() {
         initComponents();
+        this.setTitle("Simulacion/Base de datos"); //imprimi un titulo en el JFrame1
     }
 
     @SuppressWarnings("unchecked")
@@ -64,6 +76,7 @@ public class JFrame1 extends javax.swing.JFrame {
         area1.setRows(5);
         area1.setToolTipText("Entidad/Atributos");
         area1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        area1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane2.setViewportView(area1);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 550, 430));
@@ -78,9 +91,7 @@ public class JFrame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        //this.setVisible(false);
-        //JFrame2 jf2 = new JFrame2();
-        //jf2.setVisible(true);
+
         JFrame1 jf1 = new JFrame1();
         try {
             if (validarDefinicion()) { 
@@ -101,17 +112,6 @@ public class JFrame1 extends javax.swing.JFrame {
             }
         });
     }
-
-//variables globales que se usaran en todo el programa.
-    Scanner sc = new Scanner(System.in);
-    RandomAccessFile archivo = null, entidades = null, atributos = null;
-    private final String rutaBase = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal";
-    private final String rutaEntidades = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\entidades.dat";
-    private final String rutaAtributos = "C:\\Users\\Otra (Nueva)\\Desktop\\ProyectoFinal\\atributos.dat";
-    private final int totalBytes = 83, bytesEntidades = 47, bytesAtributos = 43;
-    private final static String formatoFecha = "dd/MM/yyyy";
-    static DateFormat format = new SimpleDateFormat(formatoFecha);
-    private List<Entidad> listaEntidades = new ArrayList<>(); //Clase entidad para lista.
     
     //Metodos para definicion
     boolean validarDefinicion() throws FileNotFoundException, IOException{
@@ -174,7 +174,8 @@ public class JFrame1 extends javax.swing.JFrame {
     }
     //Mostrar entidad
     private void mostrarEntidad(Entidad entidad){
-        area1.append(" Entidad:"); //area1 imprimira en el jtextArea adjunta o imprimi lo que esta dentro de las comillas
+        area1.append("\n");
+        area1.append(" Entidad:" + "\n"); //area1 imprimira en el jtextArea adjunta o imprimi lo que esta dentro de las comillas
         area1.append(" Indice: " + entidad.getIndice()+"\n");
         area1.append(" Nombre: " + entidad.getNombre()+ " \n");
         area1.append(" Cantidad de atributos: " + entidad.getCantidad()+ " \n");
@@ -199,16 +200,14 @@ public class JFrame1 extends javax.swing.JFrame {
             Entidad entidad = new Entidad(); //Instanciando clase.
             entidad.setIndice(listaEntidades.size() + 1);
             String stringNombre = JOptionPane.showInputDialog(null," Ingrese el nombre de la entidad: "," Entidad ", JOptionPane.INFORMATION_MESSAGE);
-            //String stringNombre = "";
             int longitud = 0;
             do{
-                //stringNombre = sc.nextLine();
                 longitud = stringNombre.length();
                 if(longitud < 2 || longitud >30){
-                   JOptionPane.showInputDialog(null, " La longitud del nombre no es valida [3 - 30]"," Alerta ", JOptionPane.WARNING_MESSAGE);//REVISAR**
+                   JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]"," Error ", JOptionPane.ERROR_MESSAGE);//Mensaje ha habido un error en el ingreso de informacion
                 }else{
                     if(stringNombre.contains(" ")){ //stringNombre contiene espacios vacios
-                        JOptionPane.showMessageDialog(null, " El nombre no puede contener espacios vacios, sustituya por guion bajo. ");
+                        JOptionPane.showMessageDialog(null, " El nombre no puede contener espacios vacios. \n Sustituya por guion bajo. ", " Error ", JOptionPane.ERROR_MESSAGE);
                         longitud = 0;
                     }
                 }
@@ -221,24 +220,20 @@ public class JFrame1 extends javax.swing.JFrame {
                 atributo.setIndice(entidad.getIndice());
                 longitud = 0;
                 stringNombre = JOptionPane.showInputDialog(null," Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1), " Atributo ", JOptionPane.INFORMATION_MESSAGE);
-                //System.out.println(" Escriba el nombre del atributo no. " + (entidad.getCantidad() + 1));
                 do{
-                    //stringNombre = sc.nextLine();
                     longitud = stringNombre.length(); //length se obtiene la longitud de una cadena
                     if(longitud < 2 || longitud > 30){
-                        JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]");
-                        //System.out.println(" La longitud del nombre no es valida [3 - 30]");
+                        JOptionPane.showMessageDialog(null, " La longitud del nombre no es valida [3 - 30]"," Error ", JOptionPane.ERROR_MESSAGE); //Mensaje ha habido un error en el ingreso de informacion
                     }else{
                         if(stringNombre.contains(" ")){ //contains verifica si String contiene otra subcadena o no.
                             JOptionPane.showMessageDialog(null, " El nombre no puedecontener espacios, sustituya un guien bajo. ");
-                            //System.out.println(" El nombre no puedecontener espacios, sustituya un guien bajo. ");
                             longitud = 0;
                         }
                     }
                 }while (longitud < 2 || longitud > 30); //hacer mientras longitud sea menor que 2 o longitud sea mayor que 30
                 atributo.setNombre(stringNombre);
                 
-               atributo.setValorTipoDato(Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el tipo de dato: "
+               atributo.setValorTipoDato(Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el tipo de dato: " //menu para mostrar el tipo de dato a elegir en el atributo
                        + " \n " + TipoDato.INT.getValue() + " ---------- " + TipoDato.INT.name()
                        + " \n " + TipoDato.LONG.getValue() + " ---------- " + TipoDato.LONG.name()
                        + " \n " + TipoDato.STRING.getValue() + " ---------- " + TipoDato.STRING.name()
@@ -253,12 +248,12 @@ public class JFrame1 extends javax.swing.JFrame {
                 }
                 atributo.setNombreTipoDato();
                 entidad.setAtributo(atributo);
-                bndDetener = Integer.parseInt(JOptionPane.showInputDialog(null," Desea agregar otro atributo presione cualquier numero, de lo contrario presione 0", JOptionPane.INFORMATION_MESSAGE));
-            }while(bndDetener != 0); //se realizara mientras el valor ingresado sea diferente a 0
-            JOptionPane.showMessageDialog(null, " Los datos a registrar son: ");
+                bndDetener = (showConfirmDialog(null, "¿Desea agregar otro atributo?", " Question ", JOptionPane.YES_NO_OPTION));//Permite tomar una desision al usuario
+            }while(bndDetener != 1); //se realizara mientras el valor ingresado sea diferente a 1
+            JOptionPane.showMessageDialog(null, " Los datos a registrar son: "," Entidad/Atributos ", JOptionPane.INFORMATION_MESSAGE);
 	    mostrarEntidad(entidad);
-            longitud = Integer.parseInt(JOptionPane.showInputDialog(null," Presione 1 para guardar y 0 para cancelar el proceso.", " Guardar/Borrar", JOptionPane.INFORMATION_MESSAGE));
-            if(longitud == 1){
+            longitud = (showConfirmDialog(null, "¿Desea guardar datos?", " Question ", JOptionPane.YES_NO_OPTION));//Permite tomar una desision al usuario
+            if(longitud == 0){ 
                 // primero guardar atributos
 		// establecer la posicion inicial donde se va a guardar
                 entidad.setPosicion(atributos.length());
@@ -280,7 +275,7 @@ public class JFrame1 extends javax.swing.JFrame {
 		listaEntidades.add(entidad);
 		resultado = true;
             }else{
-                JOptionPane.showMessageDialog(null, " No se guardo la entidad debido a que el usuario decidio cancelarlo. ", " No guardado ", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, " Datos no guardados... ", " No guardado ", JOptionPane.INFORMATION_MESSAGE);
                 area1.setText("");
 		resultado = false;
             }
@@ -290,14 +285,14 @@ public class JFrame1 extends javax.swing.JFrame {
         }
         return resultado;
         }
-         private void modificarEntidad(){
+         public boolean modificarEntidad(){
             try{
                 int indice = 0; //inicializando indice
 		while (indice < 1 || indice > listaEntidades.size()){ //mientras indice sea menor que 1 o indice sea mayor que listaEntidades.tamaño
                     for(Entidad entidad : listaEntidades){ 
-                        System.out.println(entidad.getIndice() + " --------- " + entidad.getNombre());
+                        area1.append(entidad.getIndice() + " --------- " + entidad.getNombre()+ "\n");
                     }
-                    indice = Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione la entidad que desea modificar: ", JOptionPane.INFORMATION_MESSAGE));
+                    indice = Integer.parseInt(JOptionPane.showInputDialog(null," Seleccione el numero de entidad que desea modificar: ", JOptionPane.INFORMATION_MESSAGE));
                 }
                 Entidad entidad = null;//clase Entidad es igual a entidad inicializada como null
                 for(Entidad e : listaEntidades){
@@ -311,7 +306,7 @@ public class JFrame1 extends javax.swing.JFrame {
 		long longitudDatos = archivo.length(); //length se obtiene la longitud de una cadena
 		archivo.close();
                 if(longitudDatos > 0){
-                    JOptionPane.showMessageDialog(null, " No es posible modificar la entidad debido a que ya tiene datos asociados");
+                    JOptionPane.showMessageDialog(null, " No es posible modificar la entidad debido a que ya tiene datos asociados", " No valido ", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     // bandera para verificar que el registro fue encontrado
 		    boolean bndEncontrado = false, bndModificado = false;
@@ -368,6 +363,7 @@ public class JFrame1 extends javax.swing.JFrame {
                 System.out.println(" Error: " + e.getMessage());
                 e.printStackTrace();
             }
+        return false;
         }
     private void menuDefinicion(boolean mostrarAgregarRegistro) throws IOException{
             int opciones = 1;//int opciones = 1;
@@ -375,52 +371,51 @@ public class JFrame1 extends javax.swing.JFrame {
                 try{
                     
                     opciones = Integer.parseInt(JOptionPane.showInputDialog(null,
-                            "------------MENU------------- \n"
-                            + " 1. --------- Agregar entidad \n"
-                            + " 2. ------- Modificar entidad \n"
-                            + " 3. -------- Listar entidades \n"
-                            + " 4. ------- Agregar registros \n"
-                            + " 5. --- Borrar bases de datos \n"
-                            + " 0 -------------------- Salir \n"
-                            + " Elija su opcion: \n"," Menu Entidades ", JOptionPane.INFORMATION_MESSAGE));
+                            " --------------MENU--------------- \n"
+                            + " 1.  Agregar entidad \n"
+                            + " 2.  Modificar entidad \n"
+                            + " 3.  Listar entidades \n"
+                            + " 4.  Agregar registros \n"
+                            + " 5.  Borrar bases de datos \n"
+                            + " 0.  Salir \n"
+                            + " Elija su opcion: \n"," Menu Principal ", JOptionPane.INFORMATION_MESSAGE));
                     switch(opciones){
                         case 0:
                             JOptionPane.showMessageDialog(null, " Aplicacion finalizada. ", " Saliendo ",JOptionPane.INFORMATION_MESSAGE );
                             break;
                         case 1:
                             if(agregarEntidad()){
-                            JOptionPane.showMessageDialog(null, " Entidad agregada con exito. ",  " Guardando.. ",JOptionPane.INFORMATION_MESSAGE );
+                            JOptionPane.showMessageDialog(null, " ¡Entidad agregada con exito! ",  " Guardando... ",JOptionPane.INFORMATION_MESSAGE );
                             mostrarAgregarRegistro = true;
                         }
                             break;
                         case 2:
                             int continuar = 0;
-                            continuar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de modificar los archivos de base de datos? "," Presione 1 para continuar de lo contrario cualquier numero para cancelar. Esta accion no es reversible. \n", JOptionPane.INFORMATION_MESSAGE));
-                            if(continuar == 1){
+                            continuar = (showConfirmDialog(null, "¿Esta seguro que desea modificar los datos?", " Question ", JOptionPane.YES_NO_OPTION));//Permite tomar una desision al usuario
+                            if(continuar == 0){
                                 cerrarArchivo();
-                                JOptionPane.showInputDialog(null, " Ingrese el nombre de la entidad a modificar ", " Modificar ",JOptionPane.INFORMATION_MESSAGE );
-                                if(borrarArchivos()){
-                                    listaEntidades = null;
+                                JOptionPane.showInputDialog(null, " Ingrese el nombre del atributo a modificar: ", " Modificar ",JOptionPane.INFORMATION_MESSAGE );
+                                if(modificarEntidad()){
 				    listaEntidades = new ArrayList<>();
 				    mostrarAgregarRegistro = false;
-                                    JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando :D ", JOptionPane.INFORMATION_MESSAGE);
+                                    JOptionPane.showMessageDialog(null, " Modificado. ", " Actualizando... ", JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }
                             break;
                         case 3:
                             if(listaEntidades.size() > 0){
                                 int temporalInt = 0;
-                                temporalInt = Integer.parseInt(JOptionPane.showInputDialog(null, " Si, presione 1. No, presione 0."," Listar ", JOptionPane.INFORMATION_MESSAGE));
-                                if(temporalInt == 1){
+                                temporalInt = (showConfirmDialog(null, "¿Mostrar?", " Question ", JOptionPane.YES_NO_OPTION));//Permite tomar una desision al usuario
+                                if(temporalInt == 0){ 
                                     for(Entidad entidad : listaEntidades){
                                         mostrarEntidad(entidad);
                                     }
                                 }else{
                                     
                                     for(Entidad entidad : listaEntidades){
-                                        area1.append(" Indice: " + entidad.getIndice());
-                                        area1.append(" Nombre: " + entidad.getNombre());
-                                        area1.append(" Cantidad de atributos: " + entidad.getCantidad());
+                                        area1.append(" Indice: " + entidad.getIndice()+ "\n" );
+                                        area1.append(" Nombre: " + entidad.getNombre()+ "\n" );
+                                        area1.append(" Cantidad de atributos: " + entidad.getCantidad() + "\n" );
                                     }
                                 }
                             }else{
@@ -431,28 +426,29 @@ public class JFrame1 extends javax.swing.JFrame {
                             int indice = 0;
                             while(indice < 1 || indice > listaEntidades.size()){
                                 for(Entidad entidad : listaEntidades){
-                                    System.out.println(entidad.getIndice() + " -------- " + entidad.getNombre());
+                                    area1.append("\n");
+                                    area1.append(entidad.getIndice() + " -------- " + entidad.getNombre());
                                 }
-                                indice = Integer.parseInt(JOptionPane.showInputDialog(null, " Seleccione el numero de entidad que desea trabajar. "," Agregar Registros ", JOptionPane.INFORMATION_MESSAGE));
+                                indice = Integer.parseInt(JOptionPane.showInputDialog(null, " Numero de entidad que desea trabajar: "," Agregar Registros ", JOptionPane.INFORMATION_MESSAGE));
                             }
                             iniciar(indice);
                             break;
                         case 5:
                             int confirmar = 0;
-                            confirmar = Integer.parseInt(JOptionPane.showInputDialog(null, " ¿Esta seguro de borrar los archivos de base de datos? \n" + " Presione 1 para continuar de lo contrario cualquier numero para cancelar. \n  Esta accion no es reversible. "," Eliminar ", JOptionPane.INFORMATION_MESSAGE));
-                            if(confirmar == 1){
+                            confirmar = (showConfirmDialog(null, "¿Esta seguro de borrar los archivos de base de datos?", " Question ", JOptionPane.YES_NO_OPTION));//Permite tomar una desision al usuario
+                            if(confirmar == 0){
                                 cerrarArchivo();
                                 if(borrarArchivos()){
                                     listaEntidades = null;
 				    listaEntidades = new ArrayList<>();
 				    mostrarAgregarRegistro = false;
-                                    area1.setText("");
-                                    JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando :D ",JOptionPane.INFORMATION_MESSAGE );
+                                    area1.setText("");//Borrar texto de jtextarea
+                                    JOptionPane.showMessageDialog(null, " Archivos borrados. ", " Actualizando... ",JOptionPane.INFORMATION_MESSAGE );
                                 }
                             }
                             break;
                         default:
-                            JOptionPane.showMessageDialog(null, " Opcion invalida. ", " Ingrese opcion de nuevo. ",JOptionPane.INFORMATION_MESSAGE );
+                            JOptionPane.showMessageDialog(null, " Opcion invalida. ", " Error ",JOptionPane.ERROR_MESSAGE );
                     }
                 }catch(NumberFormatException nf){
                     JOptionPane.showMessageDialog(null," Error " + nf.getMessage());
@@ -460,9 +456,9 @@ public class JFrame1 extends javax.swing.JFrame {
             }while(opciones != 0);
         }
         private void cerrarArchivo(){
-            if (archivo != null){
-               try{
-                   archivo.close();
+            if (archivo != null){ 
+               try{ //intento de posibles excepciones
+                   archivo.close();//se cierra archivo
                } catch(IOException e){
                    e.printStackTrace();
                }
@@ -533,12 +529,13 @@ public class JFrame1 extends javax.swing.JFrame {
                 do{
                     try{
                         opcion = Integer.parseInt(JOptionPane.showInputDialog(null, 
-                                " 1. ---------------------\t\tAgregar \n" 
-                        + " 2. ----------------------\t\tListar \n"
-                        + " 3. ----------------------\t\tBuscar \n"
-                        + " 4. -------------------\t\tModificar \n"
-                        + " 0. ---\t\tRegresar al menu anterior \n"
-                        + " Seleccione su opcion: "," Menu de Registros ", JOptionPane.INFORMATION_MESSAGE));
+                                " ----- Menu de Registros ----- \n"
+                               + " 1.  Agregar \n" 
+                               + " 2.  Listar \n"
+                               + " 3.  Buscar \n"
+                               + " 4.  Modificar \n"
+                               + " 0.  Regresar al menu anterior \n"
+                               + " Seleccione su opcion: "," Menu Registros ", JOptionPane.INFORMATION_MESSAGE));
                         switch(opcion){
                             case 0:
                                 System.out.println("");
@@ -550,18 +547,14 @@ public class JFrame1 extends javax.swing.JFrame {
                                 listarRegistros(entidad);
                                 break;
                             case 3:
-                                JOptionPane.showInputDialog(null, " Se hara la busqueda en la primera columna. \n " + " Ingrese " + at.getNombre().trim() + " a buscar"," Buscar ", JOptionPane.INFORMATION_MESSAGE);
-                                //System.out.println(" Se hara la busqueda en la primera columna ");
+                                int carne = Integer.parseInt(JOptionPane.showInputDialog(null, " Se hara la busqueda en la primera columna. \n " + " Ingrese " + at.getNombre().trim() + " a buscar"," Buscar ", JOptionPane.INFORMATION_MESSAGE));
 			        //System.out.println(" Ingrese " + at.getNombre().trim() + " a buscar");
 				// sc.nextLine();
-				// encontrarRegistro(carne);
+				encontrarRegistros(carne);
                                 break;
                             case 4:
-                                JOptionPane.showInputDialog(null, " Ingrese el carne a modificar: " ," Modificar ", JOptionPane.INFORMATION_MESSAGE);
-                                //System.out.println(" Ingrese el carne a modificar: ");
-				// carne = sc.nextInt();
-				// sc.nextLine();
-				// modificarRegistro(carne);
+                                carne = Integer.parseInt(JOptionPane.showInputDialog(null, " Ingrese dato a modificar " ," Modificar ", JOptionPane.INFORMATION_MESSAGE));
+				modificarRegistro(carne);
                                 break;
                             default:
                                 JOptionPane.showMessageDialog(null,  " Opcion invalida. :(", "Error ",JOptionPane.ERROR_MESSAGE );
@@ -608,7 +601,6 @@ public class JFrame1 extends javax.swing.JFrame {
 					longitud = temporalString.length();
                                         if(longitud <= 1 || longitud > atributo.getLongitud()){
                                             JOptionPane.showMessageDialog(null, " La longitud de " + atributo.getNombre().trim() + " no es valida [1 - " + atributo.getLongitud() + "]", "Error ",JOptionPane.ERROR_MESSAGE );
-                                            //System.out.println(" La longitud de " + atributo.getNombre().trim() + " no es valida [1 - " + atributo.getLongitud() + "]");
                                         }
                                     }while(longitud <= 0 || longitud > atributo.getLongitud());
                                     // arreglo de bytes de longitud segun definida
@@ -632,8 +624,6 @@ public class JFrame1 extends javax.swing.JFrame {
 				    temporalString = "";
                                     while(date == null){
                                         temporalString = JOptionPane.showInputDialog(null, "Formato de fecha: " + formatoFecha ," Date ", JOptionPane.INFORMATION_MESSAGE);
-                                        //System.out.println("Formato de fecha: " + formatoFecha);
-					//temporalString = sc.nextLine();
 					date = stringToDate(temporalString);
                                     }
                                     bytesString = new byte[atributo.getBytes()];
@@ -648,7 +638,6 @@ public class JFrame1 extends javax.swing.JFrame {
 					longitud = temporalString.length();//length se obtiene la longitud de una cadena
                                         if(longitud < 1 || longitud > 1){
                                             JOptionPane.showMessageDialog(null, " Solo se permite un caracter. ", "Error ",JOptionPane.ERROR_MESSAGE );
-                                            //System.out.println(" Solo se permite un caracter. ");
                                         }
                                     }while(longitud < 1 || longitud > 1);
                                     byte caracter = (byte) temporalString.charAt(0);//charAr implementó un método que recibe el índice o posición del carácter deseado en la cadena.
@@ -658,8 +647,6 @@ public class JFrame1 extends javax.swing.JFrame {
                             valido = true;
                         }catch(Exception e){
                             JOptionPane.showMessageDialog(null, " Error " + e.getMessage() + " al capturar tipo de dato, vuelva a ingresar el valor: ", "Error ",JOptionPane.ERROR_MESSAGE );
-                            //System.out.println(" Error " + e.getMessage() + " al capturar tipo de dato, vuelva a ingresar el valor: ");
-                            //sc.nextLine(); 
                         }
                     }// end while
                 }// end for
@@ -668,7 +655,6 @@ public class JFrame1 extends javax.swing.JFrame {
             }catch(Exception e){
                 resultado = false;
                 JOptionPane.showMessageDialog(null, " Error al agregar el registro " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-		//System.out.println(" Error al agregar el registro " + e.getMessage());
             }
             return resultado;
         }
@@ -678,7 +664,6 @@ public class JFrame1 extends javax.swing.JFrame {
                 long longitud = archivo.length(); //length se obtiene la longitud de una cadena
                 if(longitud <= 0){ 
                    JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
-                   //System.out.println(" No hay registros.");
 		   return; // finalizar el procedimiento 
                 }
                 archivo.seek(0); // posicionarse al principio del archivo
@@ -733,7 +718,6 @@ public class JFrame1 extends javax.swing.JFrame {
                 }
             }catch(Exception e){ //encuentra posibles errores
                 JOptionPane.showMessageDialog(null, " Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-                //System.out.println(" Error: " + e.getMessage());
             }
         }
         
@@ -742,7 +726,6 @@ public class JFrame1 extends javax.swing.JFrame {
                 long longitud = archivo.length();//length se usa para obtener la longitud de una cadena Java
                 if(longitud <= 0){
                     JOptionPane.showMessageDialog(null," No hay registros.", "Registros vacios ",JOptionPane.WARNING_MESSAGE); //muestra un mensaje de alerta WARNING_MESSAGE
-                    //System.out.println("No hay registros");
 		    return; // finalizar el procedimiento
                 }
                 // bandera para verificar que el registro fue encontrado
@@ -763,10 +746,9 @@ public class JFrame1 extends javax.swing.JFrame {
 		    al.setBytesFechaNacimiento(bFecha);
                     if(al.getCarne() == carne){
                         // imprimir los campos del registro
-			System.out.println(" Carne: " + al.getCarne()); //Verificar esto***
-			System.out.println(" Nombre: " + al.getNombre());
-			System.out.println(" Fecha de nacimiento: " + dateToString(al.getFechaNacimiento())); //ToString se utiliza para convertir a String (es decir, a una cadena de texto) cualquier objeto Java.
-
+                        area1.append(" Datos: " + al.getCarne()+ " \n ");
+                        area1.append(" Nombre: " + al.getNombre()+ " \n ");
+                        area1.append(" Fecha de nacimiento: " + dateToString(al.getFechaNacimiento())+ " \n ");//ToString se utiliza para convertir a String (es decir, a una cadena de texto) cualquier objeto Java
 			bndEncontrado = true;
 			// si el registro se ha encontrado entonces salir del ciclo
 			break;
@@ -777,11 +759,9 @@ public class JFrame1 extends javax.swing.JFrame {
                 // solo si el registro no se encontro imprimir un mensaje
                 if(!bndEncontrado){  // esto es equivalente a (bndEncontrado == false)
                     JOptionPane.showMessageDialog(null, " No se encontro el carne indicado, por favor verifique. ", "Error ",JOptionPane.ERROR_MESSAGE );
-                    //System.out.println(" No se encontro el carne indicado, por favor verifique. ");
                 }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, " Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
-            //System.out.println(" Error: " + e.getMessage());
         }
     }
         //Modificando registro
@@ -848,11 +828,10 @@ public class JFrame1 extends javax.swing.JFrame {
                         // imprimir los campos del registro
 			if (bndModificado){ // equivalente a (bndModificado == true)
                             JOptionPane.showMessageDialog(null, " El registro fue modificado correctamente, los nuevos datos son:", " Actualizacion ",JOptionPane.INFORMATION_MESSAGE );
-                            //System.out.println(" El registro fue modificado correctamente, los nuevos datos son:");
                         }
-                        System.out.println(" Carne: " + al.getCarne());
-			System.out.println(" Nombre: " + al.getNombre());
-			System.out.println(" Fecha de nacimiento: " + dateToString(al.getFechaNacimiento()));
+                        area1.append(" Datos: " + al.getCarne()+ " \n ");
+                        area1.append(" Nombre: " + al.getNombre()+ " \n ");
+                        area1.append(" Fecha de nacimiento: " + dateToString(al.getFechaNacimiento())+ " \n ");
 			bndEncontrado = true; // si el registro se ha encontrado entonces salir del ciclo
 			break;
                     }
@@ -862,7 +841,7 @@ public class JFrame1 extends javax.swing.JFrame {
                 }
                 // solo si el registro no se encontro imprimir un mensaje
 		if (!bndEncontrado){// esto es equivalente a (bndEncontrado == false)
-                    JOptionPane.showMessageDialog(null," No se encontro el carne indicado, por favor verifique.", "Error ",JOptionPane.ERROR_MESSAGE );
+                    JOptionPane.showMessageDialog(null," No se encontro, por favor verifique.", "Error ",JOptionPane.ERROR_MESSAGE );
                 }
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,"Error: " + e.getMessage(), "Error ",JOptionPane.ERROR_MESSAGE );
